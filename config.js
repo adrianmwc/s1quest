@@ -18,8 +18,8 @@ const RACE_CONFIG = {
 //maps the categories to specific colors.
 const CATEGORY_COLORS = {
     "Physical": "#e74c3c",   // Red
-    "Mental": "#3498db",     // Blue
-    "Creative": "#f1c40f",   // Yellow
+    "Science": "#3498db",     // Blue
+    "Mathematics": "#f1c40f",   // Yellow
     "Mystery": "#9b59b6",    // Purple
     "Default": "#2ecc71"     // Green (fallback if empty or unmatched)
 };
