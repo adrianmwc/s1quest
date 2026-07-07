@@ -1,4 +1,4 @@
-const CACHE_NAME = 'race-v2';
+const CACHE_NAME = 'race-v3';
 const ASSETS = [
   './',
   './index.html',
@@ -12,7 +12,7 @@ const ASSETS = [
   // --- MISSION IMAGES (Numbered 01-20) ---
   './imgsci/01-reflection.png',
   './imgsci/02-viewtwist.png',
-  './imgsci/04-giantchair.png',
+  './imgsci/03-giantchair.png',
   './imgsci/05-bodyblueprint.png',
   './imgsci/06-sundial.png',
   './imgsci/07-metalblock.png',
