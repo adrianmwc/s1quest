@@ -594,6 +594,7 @@ button.photo-upload-btn.has-photo {
     color: #1a1a1a; /* Dark text for contrast against green */
 }
 
+/*rule grid START */
 /* Rules Dashboard Grid Layout */
 .hub-rules-grid {
     display: grid;
@@ -604,7 +605,6 @@ button.photo-upload-btn.has-photo {
     padding: 0 10px;
 }
 
-//rule grid START 
 /* Individual Config Pills */
 .rule-pill {
     background: rgba(255, 255, 255, 0.08);
@@ -632,4 +632,4 @@ button.photo-upload-btn.has-photo {
 .hub-score-badge {
     margin-top: 15px;
 }
-//rule grid END
+/*rule grid END */
