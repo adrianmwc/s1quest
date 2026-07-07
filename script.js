@@ -289,7 +289,7 @@ function renderHub() {
             </div>
             <div class="hub-score-badge">
                 <span class="score-label">CURRENT SCORE</span>
-                <span class="score-value">${score()} PTS</span>
+                <span class="score-value">${score} PTS</span>
             </div>
             
             <div id="live-race-timer" class="timer-display">00:00:00</div>
