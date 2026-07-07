@@ -137,7 +137,92 @@ function startRace() {
     // 3. Build the task list
     renderHub();
 }
+/*
+function renderHub() {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('hub-screen').classList.add('active');
+    document.getElementById('display-team-name').innerText = teamName;
+    
+    const memDiv = document.getElementById('display-team-members');
+    memDiv.innerHTML = "";
+    teamMembers.forEach(m => {
+        memDiv.innerHTML += `<div class="member-pill">${m.name} <span>${m.class}</span></div>`;
+    });
 
+    const list = document.getElementById('task-list');
+    list.innerHTML = "";
+    let score = 0;
+
+    allTasks.forEach(t => {
+        const isDone = completedTasks.includes(t.id);
+        if (isDone) {
+            let s = t.pts - (hintsUsed.includes(t.id) ? RACE_CONFIG.hintPenalty : 0);
+            s -= ((attempts[t.id] || 0) * RACE_CONFIG.errorPenalty);
+            score += Math.max(0, s);
+        }
+        /* old card code without the colored categories 
+        list.innerHTML += `
+            <button class="task-card ${isDone ? 'completed' : ''}" onclick="openTask('${t.id}')">
+                <span>${t.title}</span>
+                <span style="color: var(--gold)"; font-weight:bold; font-size: 1.1rem;>${isDone ? '✅ DONE' : t.pts + ' points'}</span>
+            </button>`;
+
+        // >>> NEW CHANGES START HERE <<<
+        // 1. Resolve category color configuration properties
+        const catColor = CATEGORY_COLORS[t.category] || CATEGORY_COLORS["Default"];
+        const catLabel = t.category ? t.category : "General";
+        const badgeStyle = t.category ? `background-color: ${catColor}; display: inline-block;` : 'display: none;';
+        
+        // 2. Inject inline 'border-left' and the dynamic badge element below
+        list.innerHTML += `
+            <button class="task-card ${isDone ? 'completed' : ''}" style="border-left: 5px solid ${catColor};" onclick="openTask('${t.id}')">
+                <div class="task-info">
+                    <span class="category-badge" style="${badgeStyle}">${catLabel}</span>
+                    <span class="task-title">${t.title}</span>
+                </div>
+                <span style="color: var(--gold); font-weight:bold; font-size: 1.1rem;">
+                    ${isDone ? '✅ DONE' : t.pts + ' points'}
+                </span>
+            </button>`;
+        // >>> NEW CHANGES END HERE <<<
+    });
+
+    //Rule grid START
+    // Calculate readable minutes from config milliseconds
+    const lockoutMinutes = Math.round((RACE_CONFIG.lockoutBaseTime || 60000) / 60000);
+    
+    // Look for the header block inside your renderHub function and update its HTML structure:
+    let html = `
+        <div class="hub-header-panel">
+            <h2>TEAM: ${teamName.toUpperCase()}</h2>
+            
+            <div class="hub-rules-grid">
+                <div class="rule-pill">💡 Hint Penalty: <span>-${RACE_CONFIG.hintPenalty || 0} pts</span></div>
+                <div class="rule-pill">❌ Guess Penalty: <span>-${RACE_CONFIG.errorPenalty || 0} pts</span></div>
+                <div class="rule-pill">🔒 Safe Buffer: <span>${RACE_CONFIG.maxAttemptsBeforeLock || 3} Tries</span></div>
+                <div class="rule-pill">⏳ Lockout Duration: <span>${lockoutMinutes} min</span></div>
+            </div>
+            <div class="hub-score-badge">
+                <span class="score-label">CURRENT SCORE</span>
+                <span class="score-value">${score()} PTS</span>
+            </div>
+            
+            <div id="live-race-timer" class="timer-display">00:00:00</div>
+        </div>
+        
+        <div class="task-list-container">
+    `;
+    //Rule grid END
+    
+    document.getElementById('hub-score').innerText = `Total Score: ${score}`;
+    const p = Math.round((completedTasks.length / allTasks.length) * 100);
+    document.getElementById('progress-bar').style.width = p + "%";
+    document.getElementById('progress-bar').innerText = p + "%";
+    
+    if (completedTasks.length === allTasks.length) document.getElementById('finish-btn').style.display = 'block';
+    startGlobalTimer();
+}
+*/
 function renderHub() {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById('hub-screen').classList.add('active');
@@ -222,6 +307,7 @@ function renderHub() {
     if (completedTasks.length === allTasks.length) document.getElementById('finish-btn').style.display = 'block';
     startGlobalTimer();
 }
+
 
 function openTask(id) {
     if (completedTasks.includes(id)) return;
