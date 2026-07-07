@@ -14,7 +14,8 @@ let timerInterval = null;
 let sessionStart = 0; // Tracks the moment a task modal is opened
 
 // >>> CRITICAL FIX: Define your missing API Endpoint URL variable <<<
-const GAS_API_URL = "https://script.google.com/macros/s/AKfycbyiU54OPA3M1oCzC9YOmXCGyidOshK5cvrKm1eVbqnNKxAsTt2Kf834mFMYyPvP8YFCJw/exec";
+//const GAS_API_URL = "https://script.google.com/macros/s/AKfycbyiU54OPA3M1oCzC9YOmXCGyidOshK5cvrKm1eVbqnNKxAsTt2Kf834mFMYyPvP8YFCJw/exec"; sec 2
+const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxVzOkTo3_08zsXBun7n6HoEyJhMSjDBpuiiaRBiNB-a3b9cLf3QNqccjh80I-Wd1-NNQ/exec";
 let allTasks = [];
 
 // --- DATABASE ---
