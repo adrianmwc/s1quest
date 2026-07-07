@@ -187,6 +187,33 @@ function renderHub() {
         // >>> NEW CHANGES END HERE <<<
     });
 
+    //Rule grid START
+    // Calculate readable minutes from config milliseconds
+    const lockoutMinutes = Math.round((RACE_CONFIG.lockoutBaseTime || 60000) / 60000);
+    
+    // Look for the header block inside your renderHub function and update its HTML structure:
+    let html = `
+        <div class="hub-header-panel">
+            <h2>TEAM: ${teamName.toUpperCase()}</h2>
+            
+            <div class="hub-rules-grid">
+                <div class="rule-pill">💡 Hint Penalty: <span>-${RACE_CONFIG.hintPenalty || 0} pts</span></div>
+                <div class="rule-pill">❌ Guess Penalty: <span>-${RACE_CONFIG.errorPenalty || 0} pts</span></div>
+                <div class="rule-pill">🔒 Safe Buffer: <span>${RACE_CONFIG.maxAttemptsBeforeLock || 3} Tries</span></div>
+                <div class="rule-pill">⏳ Lockout Duration: <span>${lockoutMinutes} min</span></div>
+            </div>
+            <div class="hub-score-badge">
+                <span class="score-label">CURRENT SCORE</span>
+                <span class="score-value">${calculateCurrentScore()} PTS</span>
+            </div>
+            
+            <div id="live-race-timer" class="timer-display">00:00:00</div>
+        </div>
+        
+        <div class="task-list-container">
+    `;
+    //Rule grid END
+    
     document.getElementById('hub-score').innerText = `Total Score: ${score}`;
     const p = Math.round((completedTasks.length / allTasks.length) * 100);
     document.getElementById('progress-bar').style.width = p + "%";
