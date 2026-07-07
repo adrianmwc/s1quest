@@ -234,10 +234,8 @@ function renderHub() {
         memDiv.innerHTML += `<div class="member-pill">${m.name} <span>${m.class}</span></div>`;
     });
 
-    const list = document.getElementById('task-list');
-    list.innerHTML = "";
+    // 1. First, calculate the live score matching your layout formula
     let score = 0;
-
     allTasks.forEach(t => {
         const isDone = completedTasks.includes(t.id);
         if (isDone) {
@@ -245,20 +243,47 @@ function renderHub() {
             s -= ((attempts[t.id] || 0) * RACE_CONFIG.errorPenalty);
             score += Math.max(0, s);
         }
-        /* old card code without the colored categories 
-        list.innerHTML += `
-            <button class="task-card ${isDone ? 'completed' : ''}" onclick="openTask('${t.id}')">
-                <span>${t.title}</span>
-                <span style="color: var(--gold)"; font-weight:bold; font-size: 1.1rem;>${isDone ? '✅ DONE' : t.pts + ' points'}</span>
-            </button>`;*/
+    });
 
-        // >>> NEW CHANGES START HERE <<<
-        // 1. Resolve category color configuration properties
+    // =========================================================================
+    // >>> FIX 1 & 2: CORRECT SCORE VARIABLE AND INJECT THE RULES PANEL <<<
+    // =========================================================================
+    const lockoutMinutes = Math.round((RACE_CONFIG.lockoutBaseTime || 60000) / 60000);
+    
+    // Check if you have a target container in index.html for your header area
+    // (If you don't have this element id, update this selector to target your top hub screen area)
+    const hubHeaderContainer = document.getElementById('hub-header-container');
+    if (hubHeaderContainer) {
+        hubHeaderContainer.innerHTML = `
+            <div class="hub-header-panel">
+                <h2>TEAM: ${teamName.toUpperCase()}</h2>
+                
+                <div class="hub-rules-grid">
+                    <div class="rule-pill">💡 Hint Penalty: <span>-${RACE_CONFIG.hintPenalty || 0} pts</span></div>
+                    <div class="rule-pill">❌ Guess Penalty: <span>-${RACE_CONFIG.errorPenalty || 0} pts</span></div>
+                    <div class="rule-pill">🔒 Safe Buffer: <span>${RACE_CONFIG.maxAttemptsBeforeLock || 3} Tries</span></div>
+                    <div class="rule-pill">⏳ Lockout Duration: <span>${lockoutMinutes} min</span></div>
+                </div>
+                
+                <div class="hub-score-badge">
+                    <span class="score-label">CURRENT SCORE</span>
+                    <span class="score-value">${score} PTS</span> </div>
+                
+                <div id="live-race-timer" class="timer-display">00:00:00</div>
+            </div>
+        `;
+    }
+
+    // 2. Build and Render the dynamic color-coded task cards list
+    const list = document.getElementById('task-list');
+    list.innerHTML = "";
+
+    allTasks.forEach(t => {
+        const isDone = completedTasks.includes(t.id);
         const catColor = CATEGORY_COLORS[t.category] || CATEGORY_COLORS["Default"];
         const catLabel = t.category ? t.category : "General";
         const badgeStyle = t.category ? `background-color: ${catColor}; display: inline-block;` : 'display: none;';
         
-        // 2. Inject inline 'border-left' and the dynamic badge element below
         list.innerHTML += `
             <button class="task-card ${isDone ? 'completed' : ''}" style="border-left: 5px solid ${catColor};" onclick="openTask('${t.id}')">
                 <div class="task-info">
@@ -269,45 +294,28 @@ function renderHub() {
                     ${isDone ? '✅ DONE' : t.pts + ' points'}
                 </span>
             </button>`;
-        // >>> NEW CHANGES END HERE <<<
     });
-
-    //Rule grid START
-    // Calculate readable minutes from config milliseconds
-    const lockoutMinutes = Math.round((RACE_CONFIG.lockoutBaseTime || 60000) / 60000);
     
-    // Look for the header block inside your renderHub function and update its HTML structure:
-    let html = `
-        <div class="hub-header-panel">
-            <h2>TEAM: ${teamName.toUpperCase()}</h2>
-            
-            <div class="hub-rules-grid">
-                <div class="rule-pill">💡 Hint Penalty: <span>-${RACE_CONFIG.hintPenalty || 0} pts</span></div>
-                <div class="rule-pill">❌ Guess Penalty: <span>-${RACE_CONFIG.errorPenalty || 0} pts</span></div>
-                <div class="rule-pill">🔒 Safe Buffer: <span>${RACE_CONFIG.maxAttemptsBeforeLock || 3} Tries</span></div>
-                <div class="rule-pill">⏳ Lockout Duration: <span>${lockoutMinutes} min</span></div>
-            </div>
-            <div class="hub-score-badge">
-                <span class="score-label">CURRENT SCORE</span>
-                <span class="score-value">${score} PTS</span>
-            </div>
-            
-            <div id="live-race-timer" class="timer-display">00:00:00</div>
-        </div>
-        
-        <div class="task-list-container">
-    `;
-    //Rule grid END
+    // 3. Fallback tracking updates for standard footer text and progression bars
+    const scoreTextElement = document.getElementById('hub-score');
+    if (scoreTextElement) scoreTextElement.innerText = `Total Score: ${score}`;
     
-    document.getElementById('hub-score').innerText = `Total Score: ${score}`;
-    const p = Math.round((completedTasks.length / allTasks.length) * 100);
-    document.getElementById('progress-bar').style.width = p + "%";
-    document.getElementById('progress-bar').innerText = p + "%";
+    if (allTasks.length > 0) {
+        const p = Math.round((completedTasks.length / allTasks.length) * 100);
+        const progressBar = document.getElementById('progress-bar');
+        if (progressBar) {
+            progressBar.style.width = p + "%";
+            progressBar.innerText = p + "%";
+        }
+    }
     
-    if (completedTasks.length === allTasks.length) document.getElementById('finish-btn').style.display = 'block';
+    if (completedTasks.length === allTasks.length && completedTasks.length > 0) {
+        const finishBtn = document.getElementById('finish-btn');
+        if (finishBtn) finishBtn.style.display = 'block';
+    }
+    
     startGlobalTimer();
 }
-
 
 function openTask(id) {
     if (completedTasks.includes(id)) return;
