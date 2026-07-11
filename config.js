@@ -7,6 +7,7 @@ const RACE_CONFIG = {
     errorPenalty: 10,           // Points deducted for EVERY wrong guess
     
     accessCode: "1234",               //access code to start the race
+    stopCode: "5678",               //access code to stop the race
 
     // LOCKOUT SETTINGS
     maxAttemptsBeforeLock: 3,   // Number of wrong guesses before they get locked out
