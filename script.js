@@ -278,7 +278,7 @@ function openTask(id) {
     }
 
     document.getElementById('modal-desc').innerText = currentTask.desc;
-    document.getElementById('modal-image').src = "imagesci/" + currentTask.img;
+    document.getElementById('modal-image').src = "imgsci/" + currentTask.img;
     
     // 5. Reset photo button (Default state)
     const photoBtn = document.querySelector('.photo-upload-btn');
