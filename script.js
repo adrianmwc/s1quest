@@ -278,7 +278,7 @@ function openTask(id) {
     }
 
     document.getElementById('modal-desc').innerText = currentTask.desc;
-    document.getElementById('modal-image').src = "images/" + currentTask.img;
+    document.getElementById('modal-image').src = "imagesci/" + currentTask.img;
     
     // 5. Reset photo button (Default state)
     const photoBtn = document.querySelector('.photo-upload-btn');
@@ -1002,8 +1002,8 @@ function initializeServiceWorker() {
 
     //BYPASS code for local testing
     //comment out for production
-    swStatus = "READY";
-    updateCombinedStatus();
+    //swStatus = "READY";
+    //updateCombinedStatus();
 }
 
 // Function to enlarge the image
