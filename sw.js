@@ -13,6 +13,7 @@ const ASSETS = [
   './imgsci/01-reflection.png',
   './imgsci/02-viewtwist.png',
   './imgsci/03-giantchair.png',
+  './imgsci/04-mirrormaze.jpg,
   './imgsci/05-bodyblueprint.png',
   './imgsci/06-sundial.png',
   './imgsci/07-metalblock.png',
