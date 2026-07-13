@@ -518,17 +518,17 @@ function closeModal() {
 
 async function showPitStop() {
 
-    const stopCode = prompt("ENTER MISSION COMPLETE CODE:");
+    // const stopCode = prompt("ENTER MISSION COMPLETE CODE:");
     
-    if (stopCode === RACE_CONFIG.stopCode) {
-        // Code is correct! continue to Pit Stop
-    } else if (stopCode !== null) { 
-        // User didn't click cancel, but entered an invalid value
-        alert("🔒 ACCESS DENIED: Invalid Mission COMPLETE Code.");
-        return;
-    } else if (stopCode === null) { 
-        return;
-    }
+    // if (stopCode === RACE_CONFIG.stopCode) {
+    //     // Code is correct! continue to Pit Stop
+    // } else if (stopCode !== null) { 
+    //     // User didn't click cancel, but entered an invalid value
+    //     alert("🔒 ACCESS DENIED: Invalid Mission COMPLETE Code.");
+    //     return;
+    // } else if (stopCode === null) { 
+    //     return;
+    // }
 
     // 1. Stop all timers
     
